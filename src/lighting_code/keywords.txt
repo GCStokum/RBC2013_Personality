@@ -1,0 +1,35 @@
+#######################################
+# Syntax Coloring Map For Encabulator
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin KEYWORD2
+upUpDownDownLeftRightLeftRightBA	KEYWORD2
+
+eeprom KEYWORD2
+dac KEYWORD2
+accelerometer KEYWORD2
+temperature KEYWORD2
+
+stripBankA KEYWORD2
+stripBankB KEYWORD2
+addressable KEYWORD2
+dmx KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+Encabulator	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
