@@ -12,7 +12,11 @@ int tempB = 0;
 
 float tempX = 0.0;
 float tempY = 0.0;
-
+int score = 0;
+unsigned long readSensorTimeOut;
+int readSensorTimeDelay = 500; //number of ms delay of reading blocked condition before assuming card is in all the way, or of reading no card before resetting
+byte finishedReading = false;
+byte previousReading = false;
 void setup() {               
   
   Encabulator.upUpDownDownLeftRightLeftRightBA();
@@ -32,9 +36,43 @@ void loop() {
   for(int k = 1; k < 1000 ; k = k*2) {
     colorCycle(k);
   }
-  winner(3);
+  if (readCard()){    
+    winner(score);
+  }
   
 }
+
+int readCard(){//returns true when a hole count is finished and stored in score
+  if (readSensor()){//if true, means a hole or no card is detected
+    if (readSensorTimeOut < millis() && previousReading){
+      score = 0;
+      finishedReading = false;
+
+    }
+    if (!previousReading && !finishedReading){//just detected something passing through the sensor
+      score ++;
+      readSensorTimeOut = millis() + readSensorTimeDelay;
+      
+    }
+  }
+  else {
+    if (previousReading){
+      readSensorTimeOut = millis() + readSensorTimeDelay;
+    }
+    if (readSensorTimeOut < millis()){
+      finishedReading = true;
+      return true;
+    }
+  }
+  return false;
+}
+int readSensor(){
+  
+  
+}
+    
+      
+      
 
 void colorCycle(int j) {
   for (int i = 1; i < 9 ; i++) { 
@@ -93,6 +131,8 @@ void winner (int m) {
       }
     break;
     
+ 
+ 
     case 4:
     for (int i = 0 ; i < 5; i++) { 
       Encabulator.stripBankA.jumpHeaderToRGB(i,0,0,0); 
